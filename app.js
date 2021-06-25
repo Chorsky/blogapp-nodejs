@@ -150,7 +150,7 @@ mongoose.Promise = global.Promise;
         });
     })
 
-    app.get('/',(req,res) => {
+    app.get('/404',(req,res) => {
         res.send('ERRO 404');
     })
 
