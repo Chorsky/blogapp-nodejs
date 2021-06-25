@@ -47,7 +47,7 @@ mongoose.Promise = global.Promise;
         app.set('view engine','handlebars');
 
     //mongoose
-        mongoose.connect('mongodb+srv://admin:34263386@blogapp-primeiro-node.0hvsi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+        mongoose.connect(db.mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
