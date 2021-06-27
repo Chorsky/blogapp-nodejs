@@ -5,6 +5,17 @@ require('../models/Usuario');
 const Usuario = mongoose.model('usuarios');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+    host:"email-ssl.com.br",
+    port:587,
+    secure:false,
+    auth:{
+        user:"email@evernet.com.br",
+        pass:"Net@142536"
+    }
+});
 
 router.get('/registro',(req,res) => {
 
@@ -67,6 +78,24 @@ router.post('/registro',(req,res)=>{
                         novoUsuario.senha = hash;
 
                         novoUsuario.save().then(() => {
+
+                            transporter.sendMail({
+
+                                from:"Suporte blogapp <email@evernet.com.br>",
+                                to:req.body.email,
+                                subject:"Bem-vindo ao nosso blog, sua conta foi registrada com sucesso!",
+                                text:"Muito obrigado por se cadastrar em nosso site",
+                                html:"Para começar a criar seus posts e interagir com nossa plataforma<a href='https://young-wildwood-27820.herokuapp.com'>clique aqui</a>"
+
+                            }).then(message => {
+
+                                console.log(message);
+
+                            }).catch(err => {
+
+                                console.log(err);
+                                 
+                            })
 
                             req.flash('success_msg','Usuário cadastrado com sucesso!');
                             res.redirect('/');

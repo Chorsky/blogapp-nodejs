@@ -7,7 +7,7 @@
 <div class="card">
   <div class="card-body">
     <h4>Editar postagem: </h4>
-    <form action="/admin/postagens/edit" method="POST">
+    <form action="/admin/postagens/edit" method="POST" enctype="multipart/form-data">
         <input type="hidden" value="{{postagem._id}}" name="id">
         <label for="nome" class="form-label">Título: </label>
             <input type="text" class="form-control" name="titulo" value="{{postagem.titulo}}" placeholder="Digite o título da postagem" ><br>        
@@ -20,6 +20,15 @@
 
         <label for="slug" class="form-label">Conteúdo: </label>
             <textarea class="form-control" name="conteudo" id="conteudo" cols="30" rows="10">{{postagem.conteudo}}</textarea><br>            
+
+        <label for="imagem" class="form-label">Imagem: </label>
+            <input type="file" class="form-control" name="Imagem" id="Imagem"><br>     
+
+        <div style="text-align: center;">
+            <img src="/img/{{postagem.imagem}}" class="img-fluid" alt="Responsive image">
+        </div>
+
+        <input type="hidden" name="Imagem2" value="{{postagem.imagem}}">
 
         <label for="slug" class="form-label">Categoria: </label>
             <select name="categoria" id="categoria" class="form-select" >                

@@ -6,7 +6,19 @@ const Categoria = mongoose.model('categorias');
 require('../models/Postagem');
 const Postagem = mongoose.model('postagens');
 const {eAdmin} = require('../helpers/eAdmin');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
 
+        cb(null,"public/img");
+    },
+    filename: function(req,file,cb){
+
+        cb(null,file.originalname);
+
+    }
+})
+const upload = multer({storage});
 
 router.get('/',eAdmin,(req,res) => {
     res.render('admin/index');
@@ -181,7 +193,7 @@ router.get('/postagens/add',eAdmin,(req,res) => {
     
 })
 
-router.post('/postagens/nova',eAdmin,(req,res) => {
+router.post('/postagens/nova', upload.single('Imagem'), eAdmin,(req,res) => {
 
     var erros = [];
 
@@ -212,7 +224,8 @@ router.post('/postagens/nova',eAdmin,(req,res) => {
             slug:req.body.slug,
             descricao:req.body.descricao,
             conteudo:req.body.conteudo,
-            categoria:req.body.categoria
+            categoria:req.body.categoria,
+            imagem:req.file.filename
         }   
         
         new Postagem(novaPostagem).save().then(() => {
@@ -253,17 +266,16 @@ router.get('/postagens/editar/:id',eAdmin,(req,res) => {
 
 });
 
-router.post('/postagens/edit',eAdmin,(req,res) => {
+router.post('/postagens/edit', upload.single('Imagem'), eAdmin,(req,res) => {
 
     Postagem.findOne({_id:req.body.id}).then((postagem) => {
-
-            
+                    
         postagem.titulo = req.body.titulo;
         postagem.slug = req.body.slug;
         postagem.descricao = req.body.descricao;
         postagem.conteudo = req.body.conteudo;
         postagem.categoria = req.body.categoria;
-        
+        postagem.imagem = req.file.filename;       
 
         postagem.save().then(() => {
 

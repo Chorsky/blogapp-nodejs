@@ -7,7 +7,7 @@
 <div class="card">
   <div class="card-body">
     <h4>Nova postagem: </h4>
-    <form action="/admin/postagens/nova" method="POST">
+    <form action="/admin/postagens/nova" method="POST" enctype="multipart/form-data">
         <label for="nome" class="form-label">Título: </label>
             <input type="text" class="form-control" name="titulo" placeholder="Digite o título da postagem" ><br>        
 
@@ -19,6 +19,9 @@
 
         <label for="slug" class="form-label">Conteúdo: </label>
             <textarea class="form-control" name="conteudo" id="conteudo" cols="30" rows="10"  ></textarea><br>            
+
+        <label for="imagem" class="form-label">Imagem: </label>
+            <input type="file" class="form-control" name="Imagem" id="Imagem"><br>                
 
         <label for="slug" class="form-label">Categoria: </label>
             <select name="categoria" id="categoria" class="form-select" >
